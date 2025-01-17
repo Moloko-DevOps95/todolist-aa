@@ -7,7 +7,7 @@
 # To Do List
 
 
-#### This web page is hosted [here!](https://lordwill1.github.io/todo-list/)
+#### This web page is hosted [here!](https://todolist-aa.onrender.com/)
 
 
 ### *Features*:
@@ -26,28 +26,51 @@
 * Login Features (use APIs) & Database: So the website can be opened on any device, users can log in, and the To-Dos can be viewed anywhere, anytime.
 * Reminder/Alerts: Sending automated mails once logged in, and due date/time set.
 
-# *References*
-
-* For Fonts: [Google Fonts](https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap)
-* For Basic Icons (like Trash and Check buttons): [font-awesome](https://fontawesome.com)
-* For Favicon: [icons8](https://icons8.com/icons/)
-* For Color Coordination: [w3schools](https://www.w3schools.com/colors/colors_mixer.asp?colorbottom=000000&colortop=FFFFFF)
-* For JavaScript (Tutorial): [The Net Ninja](https://www.youtube.com/playlist?list=PL4cUxeGkcC9i9Ae2D9Ee1RvylH38dKuET)
-* For help with CSS: [CSS Tricks](https://css-tricks.com/)
-* For more CSS effects: [text-effects](https://speckyboy.com/underline-text-effects-css/)
-* For Type Writing effects: [Type-effects](https://usefulangle.com/post/85/css-typewriter-animation)
-* For Local Storage: [Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-08/cookies-localStorage-sessionStorage/)
 
 # *Contributions*
 
 - All contributors are most welcome! This is definitely open source!
 
-## *WEBSITE DEMO*
+## Installation
 
-![Screenshot (771)](https://user-images.githubusercontent.com/61280281/99399713-0844b900-290c-11eb-8d7c-1199319b4a9e.png)
+To get a local copy up and running follow these simple steps.
 
-![Screenshot (772)](https://user-images.githubusercontent.com/61280281/99399731-0da20380-290c-11eb-8a59-e0a2e5f9b19f.png)
+### Prerequisites
 
-![Screenshot (773)](https://user-images.githubusercontent.com/61280281/99399728-0d096d00-290c-11eb-9ee5-59cc8358676c.png)
+Make sure you have the following installed:
+- Node.js
+- npm
 
-![Screenshot (774)](https://user-images.githubusercontent.com/61280281/99399723-0b3fa980-290c-11eb-8728-03d974be548d.png)
+### Installation Steps
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Moloko-DevOps95/todo-list-aa.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd todo-list-aa
+    ```
+3. Install NPM packages:
+    ```sh
+    npm install
+    ```
+4. Start the development server:
+    ```sh
+    npm start
+    ```
+
+## Usage
+
+1. Open your browser and navigate to `http://localhost:3000`.
+2. Start adding your tasks and enjoy the features!
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+Moloko Rakgoale- [Percyrakgaole@outlook.com](mailto:percyrakgoale@outlook.com)
+
+Project Link: [https://github.com/Moloko-DevOps95/todo-list-aa](https://github.com/Moloko-DevOps95/todo-list-aa)

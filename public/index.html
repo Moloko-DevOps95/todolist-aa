@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
+    <title>My Todo List</title>
     <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Todo List</h1>
+        <div class="logo">MOLOKO.</div>
+        <h1>My Todo List</h1>
         <div class="theme-switcher">
-            <button class="theme-btn" data-theme="standard">Standard</button>
-            <button class="theme-btn" data-theme="light">Light</button>
-            <button class="theme-btn" data-theme="darker">Darker</button>
+            <button class="theme-btn" data-theme="standard"><i class="fas fa-sun"></i> Standard</button>
+            <button class="theme-btn" data-theme="light"><i class="fas fa-lightbulb"></i> Light</button>
+            <button class="theme-btn" data-theme="darker"><i class="fas fa-moon"></i> Darker</button>
         </div>
     </header>
     <main>
         <section class="todo-form">
             <input type="text" class="todo-input" placeholder="Add a new task">
+            <input type="date" class="todo-due-date">
+            <select class="todo-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
             <button class="todo-btn">Add Task</button>
         </section>
         <section class="todo-list">
             <ul id="todo-items"></ul>
+        </section>
+        <section class="todo-filters">
+            <input type="text" class="todo-search" placeholder="Search tasks">
+            <select class="todo-filter">
+                <option value="all">All</option>
+                <option value="completed">Completed</option>
+                <option value="incomplete">Incomplete</option>
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+            </select>
         </section>
     </main>
     <footer>

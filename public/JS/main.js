@@ -1,15 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
     const todoInput = document.querySelector(".todo-input");
+    const todoDueDate = document.querySelector(".todo-due-date");
+    const todoPriority = document.querySelector(".todo-priority");
     const todoBtn = document.querySelector(".todo-btn");
     const todoList = document.getElementById("todo-items");
     const themeButtons = document.querySelectorAll(".theme-btn");
+    const todoSearch = document.querySelector(".todo-search");
+    const todoFilter = document.querySelector(".todo-filter");
+    const downloadBtn = document.querySelector(".download-btn");
 
     // Add Task
     todoBtn.addEventListener("click", () => {
         const task = todoInput.value.trim();
+        const dueDate = todoDueDate.value;
+        const priority = todoPriority.value;
         if (task !== "") {
-            addTask(task);
+            addTask(task, dueDate, priority);
             todoInput.value = "";
+            todoDueDate.value = "";
+            todoPriority.value = "low";
         }
     });
 
@@ -28,6 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Add event listeners for search and filter
+    todoSearch.addEventListener("input", filterTasks);
+    todoFilter.addEventListener("change", filterTasks);
+
+    // Add event listener for download button
+    downloadBtn.addEventListener("click", downloadTodoList);
+
     function fetchTodos() {
         fetch('/api/todos')
             .then(response => response.json())
@@ -39,9 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Add Task Function
-    function addTask(task) {
+    function addTask(task, dueDate, priority) {
         const date = new Date().toLocaleString();
-        const newTodo = { task, date, completed: false };
+        const newTodo = { task, date, dueDate, priority, completed: false };
 
         fetch('/api/todos', {
             method: 'POST',
@@ -65,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.type = "checkbox";
         checkbox.classList.add("task-checkbox");
         checkbox.checked = todo.completed;
-        checkbox.addEventListener("change", () => toggleComplete(todo.task, span));
+        checkbox.addEventListener("change", () => toggleComplete(todo.task, span, completedSpan));
 
         // Task text
         const span = document.createElement("span");
@@ -75,10 +91,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         span.textContent = todo.task;
 
-        // Date
-        const dateSpan = document.createElement("span");
-        dateSpan.classList.add("task-date");
-        dateSpan.textContent = ` (Added on: ${todo.date})`;
+        // Due Date
+        const dueDateSpan = document.createElement("span");
+        dueDateSpan.classList.add("task-due-date");
+        dueDateSpan.textContent = `Due: ${todo.dueDate}`;
+
+        // Priority
+        const prioritySpan = document.createElement("span");
+        prioritySpan.classList.add("task-priority");
+        prioritySpan.textContent = `Priority: ${todo.priority}`;
+
+        // Completed/Incomplete text
+        const completedSpan = document.createElement("span");
+        if (todo.completed) {
+            completedSpan.classList.add("task-completed");
+            completedSpan.textContent = "Completed";
+        } else {
+            completedSpan.classList.add("task-incomplete");
+            completedSpan.textContent = "Incomplete";
+        }
 
         // Update button
         const updateBtn = document.createElement("button");
@@ -95,19 +126,30 @@ document.addEventListener("DOMContentLoaded", () => {
         // Append elements
         li.appendChild(checkbox);
         li.appendChild(span);
-        li.appendChild(dateSpan);
+        li.appendChild(dueDateSpan);
+        li.appendChild(prioritySpan);
+        li.appendChild(completedSpan);
         li.appendChild(updateBtn);
         li.appendChild(deleteBtn);
         todoList.appendChild(li);
     }
 
     // Toggle Task Completion
-    function toggleComplete(task, span) {
+    function toggleComplete(task, span, completedSpan) {
         fetch(`/api/todos/${task}`, {
             method: 'PUT'
         })
         .then(() => {
             span.classList.toggle("completed");
+            if (span.classList.contains("completed")) {
+                completedSpan.classList.remove("task-incomplete");
+                completedSpan.classList.add("task-completed");
+                completedSpan.textContent = "Completed";
+            } else {
+                completedSpan.classList.remove("task-completed");
+                completedSpan.classList.add("task-incomplete");
+                completedSpan.textContent = "Incomplete";
+            }
         });
     }
 
@@ -142,5 +184,49 @@ document.addEventListener("DOMContentLoaded", () => {
     function applyTheme(theme) {
         document.body.className = theme;
         localStorage.setItem("theme", theme);
+    }
+
+    // Filter Tasks
+    function filterTasks() {
+        const searchText = todoSearch.value.toLowerCase();
+        const filterValue = todoFilter.value;
+        const todoItems = document.querySelectorAll(".todo-item");
+
+        todoItems.forEach(item => {
+            const taskText = item.querySelector(".task-text").textContent.toLowerCase();
+            const isCompleted = item.querySelector(".task-checkbox").checked;
+            const priority = item.querySelector(".task-priority").textContent.toLowerCase();
+
+            let shouldDisplay = true;
+
+            if (searchText && !taskText.includes(searchText)) {
+                shouldDisplay = false;
+            }
+
+            if (filterValue === "completed" && !isCompleted) {
+                shouldDisplay = false;
+            } else if (filterValue === "incomplete" && isCompleted) {
+                shouldDisplay = false;
+            } else if (filterValue !== "all" && filterValue !== "completed" && filterValue !== "incomplete" && !priority.includes(filterValue)) {
+                shouldDisplay = false;
+            }
+
+            item.style.display = shouldDisplay ? "flex" : "none";
+        });
+    }
+
+    // Download Todo List
+    function downloadTodoList() {
+        fetch('/api/todos')
+            .then(response => response.json())
+            .then(todos => {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(todos));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "todo_list.json");
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            });
     }
 });

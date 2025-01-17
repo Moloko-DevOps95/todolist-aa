@@ -25,6 +25,8 @@ app.post('/api/todos', (req, res) => {
     const newTodo = {
         task: req.body.task,
         date: req.body.date,
+        dueDate: req.body.dueDate,
+        priority: req.body.priority,
         completed: req.body.completed
     };
     fs.readFile('data.json', 'utf8', (err, data) => {
