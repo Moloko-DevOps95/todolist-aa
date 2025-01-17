@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="CSS/main.css">
+</head>
+<body>
+    <header>
+        <h1>Todo List</h1>
+        <div class="theme-switcher">
+            <button class="theme-btn" data-theme="standard">Standard</button>
+            <button class="theme-btn" data-theme="light">Light</button>
+            <button class="theme-btn" data-theme="darker">Darker</button>
+        </div>
+    </header>
+    <main>
+        <section class="todo-form">
+            <input type="text" class="todo-input" placeholder="Add a new task">
+            <button class="todo-btn">Add Task</button>
+        </section>
+        <section class="todo-list">
+            <ul id="todo-items"></ul>
+        </section>
+    </main>
+    <footer>
+        <p id="datetime"></p>
+    </footer>
+    <script src="JS/main.js"></script>
+    <script src="JS/time.js"></script>
+</body>
+</html>
