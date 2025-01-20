@@ -4,10 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const todoPriority = document.querySelector(".todo-priority");
     const todoBtn = document.querySelector(".todo-btn");
     const todoList = document.getElementById("todo-items");
-    const themeButtons = document.querySelectorAll(".theme-btn");
+    const themeDropdown = document.querySelector(".theme-dropdown");
     const todoSearch = document.querySelector(".todo-search");
     const todoFilter = document.querySelector(".todo-filter");
-    const downloadBtn = document.querySelector(".download-btn");
 
     // Add Task
     todoBtn.addEventListener("click", () => {
@@ -28,21 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Apply saved theme on page load
     const savedTheme = localStorage.getItem("theme") || "standard";
     applyTheme(savedTheme);
+    themeDropdown.value = savedTheme;
 
-    // Add event listeners for theme buttons
-    themeButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const theme = button.getAttribute("data-theme");
-            applyTheme(theme);
-        });
+    // Add event listener for theme dropdown
+    themeDropdown.addEventListener("change", () => {
+        const theme = themeDropdown.value;
+        applyTheme(theme);
     });
 
     // Add event listeners for search and filter
     todoSearch.addEventListener("input", filterTasks);
     todoFilter.addEventListener("change", filterTasks);
-
-    // Add event listener for download button
-    downloadBtn.addEventListener("click", downloadTodoList);
 
     function fetchTodos() {
         fetch('/api/todos')
@@ -111,6 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
             completedSpan.textContent = "Incomplete";
         }
 
+        // Button container
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+
         // Update button
         const updateBtn = document.createElement("button");
         updateBtn.textContent = "Update";
@@ -123,14 +122,17 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteBtn.classList.add("delete-btn");
         deleteBtn.addEventListener("click", () => deleteTask(todo.task, li));
 
+        // Append buttons to container
+        buttonContainer.appendChild(updateBtn);
+        buttonContainer.appendChild(deleteBtn);
+
         // Append elements
         li.appendChild(checkbox);
         li.appendChild(span);
         li.appendChild(dueDateSpan);
         li.appendChild(prioritySpan);
         li.appendChild(completedSpan);
-        li.appendChild(updateBtn);
-        li.appendChild(deleteBtn);
+        li.appendChild(buttonContainer);
         todoList.appendChild(li);
     }
 
@@ -213,20 +215,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
             item.style.display = shouldDisplay ? "flex" : "none";
         });
-    }
-
-    // Download Todo List
-    function downloadTodoList() {
-        fetch('/api/todos')
-            .then(response => response.json())
-            .then(todos => {
-                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(todos));
-                const downloadAnchorNode = document.createElement('a');
-                downloadAnchorNode.setAttribute("href", dataStr);
-                downloadAnchorNode.setAttribute("download", "todo_list.json");
-                document.body.appendChild(downloadAnchorNode);
-                downloadAnchorNode.click();
-                downloadAnchorNode.remove();
-            });
     }
 });
