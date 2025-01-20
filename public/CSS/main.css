@@ -326,6 +326,12 @@ body.light .todo-item {
 }
 
 @media (min-width: 600px) {
+    .todo-form,
+    .todo-filters {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
     .todo-input,
     .todo-due-date,
     .todo-priority,
@@ -334,6 +340,7 @@ body.light .todo-item {
     .todo-filter {
         flex: 1 1 calc(50% - 0.5rem);
         margin-right: 0.5rem;
+        margin-bottom: 1rem; /* Add margin-bottom to create space between elements */
     }
 
     .todo-btn {
@@ -347,6 +354,12 @@ body.light .todo-item {
 }
 
 @media (min-width: 768px) {
+    .todo-form,
+    .todo-filters {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
     .todo-input,
     .todo-due-date,
     .todo-priority,
@@ -354,6 +367,8 @@ body.light .todo-item {
     .todo-search,
     .todo-filter {
         flex: 1 1 calc(33.33% - 0.5rem);
+        margin-right: 0.5rem;
+        margin-bottom: 1rem; /* Add margin-bottom to create space between elements */
     }
 
     .todo-btn {
