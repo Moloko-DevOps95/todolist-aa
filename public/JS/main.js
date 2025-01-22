@@ -1,3 +1,4 @@
+/* filepath: /c:/Users/Capaciti/Desktop/todo-list aa/public/JS/main.js */
 document.addEventListener("DOMContentLoaded", () => {
     const todoInput = document.querySelector(".todo-input");
     const todoDueDate = document.querySelector(".todo-due-date");
@@ -79,24 +80,35 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.addEventListener("change", () => toggleComplete(todo.task, span, completedSpan));
 
         // Task text
+        const taskSection = document.createElement("div");
+        taskSection.classList.add("task-section");
         const span = document.createElement("span");
         span.classList.add("task-text");
         if (todo.completed) {
             span.classList.add("completed");
         }
         span.textContent = todo.task;
+        taskSection.appendChild(span);
 
         // Due Date
+        const dateSection = document.createElement("div");
+        dateSection.classList.add("date-section");
         const dueDateSpan = document.createElement("span");
         dueDateSpan.classList.add("task-due-date");
         dueDateSpan.textContent = `Due: ${todo.dueDate}`;
+        dateSection.appendChild(dueDateSpan);
 
         // Priority
+        const prioritySection = document.createElement("div");
+        prioritySection.classList.add("priority-section");
         const prioritySpan = document.createElement("span");
         prioritySpan.classList.add("task-priority");
         prioritySpan.textContent = `Priority: ${todo.priority}`;
+        prioritySection.appendChild(prioritySpan);
 
         // Completed/Incomplete text
+        const statusSection = document.createElement("div");
+        statusSection.classList.add("status-section");
         const completedSpan = document.createElement("span");
         if (todo.completed) {
             completedSpan.classList.add("task-completed");
@@ -105,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
             completedSpan.classList.add("task-incomplete");
             completedSpan.textContent = "Incomplete";
         }
+        statusSection.appendChild(completedSpan);
 
         // Button container
         const buttonContainer = document.createElement("div");
@@ -112,13 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update button
         const updateBtn = document.createElement("button");
-        updateBtn.textContent = "Update";
+        updateBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Font Awesome edit icon
         updateBtn.classList.add("update-btn");
         updateBtn.addEventListener("click", () => updateTask(span, todo.task));
 
         // Delete button
         const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
+        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Font Awesome trash icon
         deleteBtn.classList.add("delete-btn");
         deleteBtn.addEventListener("click", () => deleteTask(todo.task, li));
 
@@ -128,10 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Append elements
         li.appendChild(checkbox);
-        li.appendChild(span);
-        li.appendChild(dueDateSpan);
-        li.appendChild(prioritySpan);
-        li.appendChild(completedSpan);
+        li.appendChild(taskSection);
+        li.appendChild(dateSection);
+        li.appendChild(prioritySection);
+        li.appendChild(statusSection);
         li.appendChild(buttonContainer);
         todoList.appendChild(li);
     }

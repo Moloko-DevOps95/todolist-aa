@@ -83,6 +83,37 @@ main {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.todo-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.todo-search {
+    flex: 1 1 70%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.todo-filter {
+    flex: 1 1 28%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.todo-search:focus,
+.todo-filter:focus {
+    border-color: #ff7e5f;
+}
+
 .todo-form {
     display: flex;
     flex-wrap: wrap;
@@ -126,6 +157,9 @@ main {
 .todo-list {
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 1rem; /* Add space between items */
 }
 
 .todo-item {
@@ -135,12 +169,28 @@ main {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     display: flex;
+    flex-direction: row; /* Align items horizontally */
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap; /* Ensure items do not wrap */
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.5s forwards;
+    font-size: 0.875rem; /* Smaller font size for todo items */
+}
+
+.todo-item > div {
+    flex: 1;
+    padding: 0.5rem;
+    border-right: 1px solid #ccc; /* Add right border to divide columns */
+}
+
+.todo-item > div:last-child {
+    border-right: none; /* Remove right border from the last column */
+}
+
+.button-container {
+    display: flex;
+    gap: 0.5rem; /* Add space between buttons */
 }
 
 @keyframes fadeInUp {
@@ -163,7 +213,7 @@ body.light .todo-item {
 .todo-date {
     font-size: 0.8rem;
     color: #888;
-    margin-left: 10px;
+    flex: 1 1 150px; /* Increase flex basis to fit date */
 }
 
 .todo-item.completed .task-text {
@@ -177,7 +227,6 @@ body.light .todo-item {
     cursor: pointer;
     font-size: 1.2rem;
     color: #ff7e5f;
-    margin-left: 0.5rem;
     transition: color 0.3s ease;
 }
 
@@ -185,9 +234,21 @@ body.light .todo-item {
     color: #feb47b;
 }
 
+.update-btn,
+.delete-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none; /* Remove default border */
+    display: inline-block; /* Ensure buttons are inline-block */
+    text-align: center; /* Center text */
+    margin: 0.5rem; /* Add margin for spacing */
+}
+
 .update-btn {
     background-color: #4caf50;
-    color: white;
 }
 
 .update-btn:hover {
@@ -196,7 +257,6 @@ body.light .todo-item {
 
 .delete-btn {
     background-color: #f44336;
-    color: white;
 }
 
 .delete-btn:hover {
@@ -206,19 +266,16 @@ body.light .todo-item {
 .task-date {
     font-size: 0.85em;
     color: gray;
-    margin-left: 10px;
 }
 
 .task-completed {
     font-size: 0.85em;
     color: green;
-    margin-left: 10px;
 }
 
 .task-incomplete {
     font-size: 0.85em;
     color: red;
-    margin-left: 10px;
 }
 
 .todo-filters {
@@ -256,127 +313,40 @@ body.light .todo-item {
 }
 
 /* Media Queries */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .logo {
-        display: none; /* Hide the logo on small devices */
-    }
-
-    .theme-switcher {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .theme-dropdown {
-        width: 80%; /* Decrease width */
-        margin: 0.5rem 0;
-        padding: 0.25rem 0.5rem; /* Decreased padding */
-        font-size: 0.75rem; /* Decreased font size */
-    }
-
-    header h1 {
-        font-size: 1.25rem; /* Decreased font size for "My Todo List" text */
-    }
-
-    header {
-        font-size: 0.875rem; /* Adjust font size for header */
-        flex-direction: column; /* Stack header elements vertically */
-        align-items: center; /* Center align header elements */
-    }
-
-    .todo-input,
-    .todo-due-date,
-    .todo-priority,
-    .todo-btn,
-    .todo-search,
-    .todo-filter {
-        font-size: 0.875rem; /* Adjust font size for form elements */
+        display: none; /* Hide the logo on smaller screens */
     }
 
     .todo-item {
-        font-size: 0.875rem; /* Adjust font size for todo items */
-        flex-direction: column; /* Stack items vertically */
-        align-items: flex-start; /* Align items to the start */
+        flex-direction: column; /* Stack items vertically on smaller screens */
     }
 
-    .todo-item button {
-        font-size: 1rem; /* Adjust font size for buttons */
+    .todo-item > div {
+        border-right: none; /* Remove right border on smaller screens */
+        border-bottom: 1px solid #ccc; /* Add bottom border to divide rows */
     }
 
-    .task-text {
-        margin-top: 0.5rem; /* Add margin to the top of the task text */
-    }
-
-    .task-date,
-    .task-priority,
-    .task-completed,
-    .task-incomplete {
-        margin-top: 0.5rem; /* Add margin to the top of these elements */
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 0.5rem;
-        padding: 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #f9f9f9;
+    .todo-item > div:last-child {
+        border-bottom: none; /* Remove bottom border from the last row */
     }
 }
 
-@media (min-width: 600px) {
-    .todo-form,
-    .todo-filters {
-        flex-direction: row;
-        justify-content: space-between;
+@media (max-width: 600px) {
+    .logo {
+        display: none; /* Hide the logo on small screens */
     }
 
-    .todo-input,
-    .todo-due-date,
-    .todo-priority,
-    .todo-btn,
-    .todo-search,
-    .todo-filter {
-        flex: 1 1 calc(50% - 0.5rem);
-        margin-right: 0.5rem;
-        margin-bottom: 1rem; /* Add margin-bottom to create space between elements */
+    .todo-item {
+        flex-direction: column; /* Stack items vertically on small screens */
     }
 
-    .todo-btn {
-        flex: 1 1 100%;
+    .todo-item > div {
+        border-right: none; /* Remove right border on small screens */
+        border-bottom: 1px solid #ccc; /* Add bottom border to divide rows */
     }
 
-    .todo-search,
-    .todo-filter {
-        flex: 1 1 calc(50% - 0.5rem);
-    }
-}
-
-@media (min-width: 768px) {
-    .todo-form,
-    .todo-filters {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .todo-input,
-    .todo-due-date,
-    .todo-priority,
-    .todo-btn,
-    .todo-search,
-    .todo-filter {
-        flex: 1 1 calc(33.33% - 0.5rem);
-        margin-right: 0.5rem;
-        margin-bottom: 1rem; /* Add margin-bottom to create space between elements */
-    }
-
-    .todo-btn {
-        flex: 1 1 100%;
-    }
-
-    .todo-search,
-    .todo-filter {
-        flex: 1 1 calc(33.33% - 0.5rem);
+    .todo-item > div:last-child {
+        border-bottom: none; /* Remove bottom border from the last row */
     }
 }
