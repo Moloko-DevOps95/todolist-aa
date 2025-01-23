@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch('/api/todos')
             .then(response => response.json())
             .then(todos => {
+                todoList.innerHTML = ''; // Clear the existing list
                 todos.forEach(todo => {
                     createTodoElement(todo);
                 });
@@ -75,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify(newTodo)
         })
         .then(response => response.json())
-        .then(todo => {
-            createTodoElement(todo, true);
+        .then(() => {
+            fetchTodos(); // Fetch and display the updated list of tasks
         });
     }
 
