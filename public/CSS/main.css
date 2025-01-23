@@ -87,7 +87,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 .todo-search {
@@ -154,6 +154,14 @@ main {
     background-color: #feb47b;
 }
 
+.todo-container {
+    max-height: 400px; /* Set maximum height for the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Add border to the container */
+    border-radius: 4px; /* Add border radius to the container */
+    padding: 0.5rem; /* Add padding to the container */
+}
+
 .todo-list {
     list-style: none;
     padding: 0;
@@ -176,6 +184,21 @@ main {
     transform: translateY(20px);
     animation: fadeInUp 0.5s forwards;
     font-size: 0.875rem; /* Smaller font size for todo items */
+}
+
+.todo-item.new-task {
+    animation: scaleIn 0.5s ease-in-out;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .todo-item > div {
@@ -310,6 +333,24 @@ body.light .todo-item {
 
 .task-checkbox {
     margin-right: 10px; /* Add margin to the checkbox */
+}
+
+.cursor-circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 0, 0, 0.5); /* Create a border to make it a ring */
+    background-color: transparent; /* Make the background transparent */
+    border-radius: 50%;
+    pointer-events: none; /* Ensure the circle does not interfere with mouse events */
+    transform: translate(-50%, -50%); /* Center the circle on the cursor */
+    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+}
+
+.cursor-circle.open {
+    width: 40px;
+    height: 40px;
+    border-color: rgba(255, 0, 0, 0.8); /* Change the border color when open */
 }
 
 /* Media Queries */

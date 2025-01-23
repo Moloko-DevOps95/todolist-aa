@@ -1,4 +1,3 @@
-/* filepath: /c:/Users/Capaciti/Desktop/todo-list aa/public/JS/main.js */
 document.addEventListener("DOMContentLoaded", () => {
     const todoInput = document.querySelector(".todo-input");
     const todoDueDate = document.querySelector(".todo-due-date");
@@ -8,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeDropdown = document.querySelector(".theme-dropdown");
     const todoSearch = document.querySelector(".todo-search");
     const todoFilter = document.querySelector(".todo-filter");
+    const cursorCircle = document.querySelector(".cursor-circle");
 
     // Add Task
     todoBtn.addEventListener("click", () => {
@@ -40,6 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
     todoSearch.addEventListener("input", filterTasks);
     todoFilter.addEventListener("change", filterTasks);
 
+    // Add event listener for mouse movement
+    document.addEventListener("mousemove", (e) => {
+        cursorCircle.style.left = `${e.clientX}px`;
+        cursorCircle.style.top = `${e.clientY}px`;
+        cursorCircle.classList.add("open");
+    });
+
+    // Remove the 'open' class when the mouse stops moving
+    document.addEventListener("mouseout", () => {
+        cursorCircle.classList.remove("open");
+    });
+
     function fetchTodos() {
         fetch('/api/todos')
             .then(response => response.json())
@@ -64,13 +76,16 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(response => response.json())
         .then(todo => {
-            createTodoElement(todo);
+            createTodoElement(todo, true);
         });
     }
 
-    function createTodoElement(todo) {
+    function createTodoElement(todo, isNew = false) {
         const li = document.createElement("li");
         li.classList.add("todo-item");
+        if (isNew) {
+            li.classList.add("new-task");
+        }
 
         // Checkbox for task completion
         const checkbox = document.createElement("input");
