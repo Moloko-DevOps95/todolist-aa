@@ -8,7 +8,6 @@ body {
     font-family: 'Work Sans', sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center;
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -37,7 +36,20 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+#datetime {
+    margin-right: 1rem;
 }
 
 body.light header {
@@ -80,7 +92,10 @@ main {
     width: 100%;
     max-width: 800px; /* Increased max-width */
     padding: 2rem;
+    padding-top: 80px; /* Adjust based on header height */
+    padding-bottom: 60px; /* Adjust based on footer height */
     transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0 auto; /* Center the main content */
 }
 
 .todo-filters {
@@ -155,6 +170,7 @@ main {
 }
 
 .todo-container {
+    flex: 1;
     max-height: 400px; /* Set maximum height for the container */
     overflow-y: auto; /* Enable vertical scrolling */
     border: 1px solid #ccc; /* Add border to the container */
@@ -339,7 +355,7 @@ body.light .todo-item {
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 2px solid rgba(255, 0, 0, 0.5); /* Create a border to make it a ring */
+    border: 2px solid rgba(255, 0, 0, 0.5); /* Initial border color */
     background-color: transparent; /* Make the background transparent */
     border-radius: 50%;
     pointer-events: none; /* Ensure the circle does not interfere with mouse events */
@@ -353,8 +369,35 @@ body.light .todo-item {
     border-color: rgba(255, 0, 0, 0.8); /* Change the border color when open */
 }
 
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light footer {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+body.darker footer {
+    background-color: #000;
+    color: #fff;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
+    #datetime {
+        display: none; /* Hide the date on smaller screens */
+    }
+
     .logo {
         display: none; /* Hide the logo on smaller screens */
     }
@@ -390,4 +433,22 @@ body.light .todo-item {
     .todo-item > div:last-child {
         border-bottom: none; /* Remove bottom border from the last row */
     }
+}
+
+@keyframes colorChange {
+    0% { color: #ff7e5f; }
+    25% { color: #a55110; }
+    50% { color: #8b1e02; }
+    75% { color: #eb6b09; }
+    100% { color: #ff7e5f; }
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+h1 {
+    animation: colorChange 5s infinite, breathe 3s infinite;
+    text-align: center; /* Center the title */
 }
